@@ -35,6 +35,7 @@ soup = BeautifulSoup(page.content, "html.parser")
 info_cards = soup.find_all("div", class_="infocard")
 
 pokemon_list = []
+output_fixture = []
 
 for ic in info_cards:
     print(ic)
@@ -63,3 +64,10 @@ for pokemon in pokemon_list:
     img_data = requests.get(pokemon.img_url)
     with open(f"images/{pokemon.name}.png", "wb") as fp:
         fp.write(img_data.content)
+
+    output_fixture.append({
+        "model": "api.Pokemon",
+        "name": pokemon.name,
+        "pk": pokemon.number,
+        "types": []
+    })
